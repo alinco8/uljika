@@ -21,8 +21,8 @@ split_commits = false
 commit_preprocessors = []
 protect_breaking_commits = false
 commit_parsers = [
-    { message = "^feat", group = "<!-- 0 -->🚀 Features" },
-    { message = "^fix", group = "<!-- 1 -->🐛 Bug Fixes" },
+    { message = "^feat", group = "<!-- 0 -->🚀 機能" },
+    { message = "^fix", group = "<!-- 1 -->🐛 バグ修正" },
     { message = ".*", skip = true },
 ]
 filter_commits = false
