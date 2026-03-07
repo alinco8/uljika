@@ -20,7 +20,7 @@ struct SettingsView: View {
                     TextField(text: $calculator.fallbackText) {
                         Text("予定がないときの文字")
                     }
-                    LaunchAtLogin.Toggle("ログイン時にを起動")
+                    LaunchAtLogin.Toggle("ログイン時に起動")
                 }
             }
         }
