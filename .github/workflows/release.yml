@@ -24,6 +24,10 @@ jobs:
           curl -L -O https://github.com/orhun/git-cliff/releases/download/v2.12.0/git-cliff-2.12.0-aarch64-apple-darwin.tar.gz
           tar -xf git-cliff-2.12.0-aarch64-apple-darwin.tar.gz --strip-components=1 -C /usr/local/bin "git-cliff-*/git-cliff"
           chmod +x /usr/local/bin/git-cliff
+      - name: Setup create-dmg
+        run: |
+          curl -L https://github.com/create-dmg/create-dmg/raw/refs/heads/master/create-dmg -o /usr/local/bin/create-dmg
+          chmod +x /usr/local/bin/create-dmg
 
       - name: Calculate next version
         id: calculate_version
@@ -78,11 +82,25 @@ jobs:
             --release-notes-url-prefix "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" \
             release-assets/
 
+      - name: Create .dmg
+        run: |
+          create-dmg \
+            --window-size 600 400 \
+            --background ./assets/dmg/background.tiff \
+            --icon-size 100 \
+            --icon "Uljika.app" 150 200 \
+            --app-drop-link 450 200 \
+            --volname Uljika \
+            --volicon ./assets/icon.icns \
+            "Uljika-${{ steps.calculate_version.outputs.version }}.dmg" \
+            build/Build/Products/Release/Uljika.app
+
+           mv Uljika-${{ steps.calculate_version.outputs.version }}.dmg release-assets/
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           name: Uljika ${{ steps.calculate_version.outputs.version }}
-          files: release-assets/Uljika-${{ steps.calculate_version.outputs.version }}.zip
+          files: release-assets/Uljika-${{ steps.calculate_version.outputs.version }}.{zip,dmg}
           tag_name: ${{ steps.calculate_version.outputs.version }}
           body_path: release-notes.md
 
