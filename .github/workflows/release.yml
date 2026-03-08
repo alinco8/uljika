@@ -29,6 +29,7 @@ jobs:
           curl -L https://github.com/create-dmg/create-dmg/raw/refs/heads/master/create-dmg -o /usr/local/bin/create-dmg
           chmod +x /usr/local/bin/create-dmg
 
+          mkdir -p /usr/local/share/create-dmg/support
           curl -L https://github.com/create-dmg/create-dmg/raw/refs/heads/master/support/eula-resources-template.xml -o /usr/local/share/create-dmg/support/eula-resources-template.xml
           curl -L https://github.com/create-dmg/create-dmg/raw/refs/heads/master/support/template.applescript -o /usr/local/share/create-dmg/support/template.applescript
 
