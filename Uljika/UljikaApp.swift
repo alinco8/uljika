@@ -2,11 +2,6 @@ import Combine
 import SwiftData
 import SwiftUI
 
-enum RenderStyle: String {
-    case Normal = "ノーマル"
-    case Compact = "コンパクト"
-}
-
 @Observable
 class TimeCalculator {
     static let schedules: [(String, Int)] = [
@@ -30,33 +25,12 @@ class TimeCalculator {
     private var timer: AnyCancellable?
     private var nextSchedule: (String, Int)?
 
-    var title: String = "??まで--:--"
-    var fallbackText: String {
-        didSet {
-            UserDefaults.standard.set(fallbackText, forKey: "fallbackText")
-        }
-    }
-    var course: Int {
-        didSet { UserDefaults.standard.set(course, forKey: "course") }
-    }
-    var renderStyle: RenderStyle {
-        didSet {
-            UserDefaults.standard.set(
-                renderStyle.rawValue,
-                forKey: "renderStyle"
-            )
-        }
-    }
+    var settings: AppSettings
+    var title = "??まで--:--"
 
-    init() {
-        self.fallbackText =
-            UserDefaults.standard.string(forKey: "fallbackText") ?? "(:3_ヽ)_"
-        self.course =
-            UserDefaults.standard.integer(forKey: "course") == 0
-            ? 5 : UserDefaults.standard.integer(forKey: "course")
-        let styleRaw = UserDefaults.standard.string(forKey: "renderStyle") ?? ""
-        self.renderStyle = RenderStyle(rawValue: styleRaw) ?? .Normal
-
+    init(settings: AppSettings) {
+        self.settings = settings
+        
         let date = Date()
         let components = Self.calendar.dateComponents(
             [.hour, .minute, .second],
@@ -94,14 +68,14 @@ class TimeCalculator {
         let schoolDay =
             {
                 let weekday = components.weekday ?? 1
-                return switch course {
+                return switch settings.course {
                 case 1: weekday == 5
                 case 3: weekday % 2 == 0
                 default: 2 <= weekday && weekday <= 6
                 }
             }()
         if !schoolDay {
-            title = fallbackText
+            title = settings.fallbackText
             return
         }
 
@@ -119,7 +93,7 @@ class TimeCalculator {
             let leftMinutes = leftSecs / 60
             let leftSeconds = leftSecs % 60
             let newTitle =
-                switch renderStyle {
+                switch settings.renderStyle {
                 case .Normal:
                     "\(label)まで\(String(format: "%02d", leftMinutes)):\(String(format: "%02d", leftSeconds))"
                 case .Compact:
@@ -129,7 +103,7 @@ class TimeCalculator {
                 title = newTitle
             }
         } else {
-            title = fallbackText
+            title = settings.fallbackText
         }
     }
     private func refreshNextSchedule(nowSecs: Int) {
@@ -142,13 +116,22 @@ class TimeCalculator {
 @main
 struct UljikaApp: App {
 
-    @State private var calculator = TimeCalculator()
-    @State private var updateManager = UpdateManager()
+    @State private var calculator: TimeCalculator
+    @State private var updateManager: UpdateManager
+    @State private var settings: AppSettings
+    
+    init() {
+        let settings = AppSettings()
+        
+        self.settings = settings
+        self.calculator = TimeCalculator(settings: settings)
+        self.updateManager = UpdateManager()
+    }
 
     var body: some Scene {
         Settings {
             SettingsView(
-                calculator: calculator
+                settings: settings
             ).onAppear(perform: NSApp.activate)
         }.defaultLaunchBehavior(.suppressed)
         MenuBarExtra {
