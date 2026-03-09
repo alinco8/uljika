@@ -149,23 +149,14 @@ struct UljikaApp: App {
         Settings {
             SettingsView(
                 calculator: calculator
-            )
+            ).onAppear(perform: NSApp.activate)
         }.defaultLaunchBehavior(.suppressed)
         MenuBarExtra {
-            Button("更新を確認") {
-                updateManager.checkForUpdates()
-            }
-            SettingsLink {
-                Text("設定")
-            }.simultaneousGesture(
-                TapGesture().onEnded {
-                    NSApp.activate(ignoringOtherApps: true)
-                }
-            ).keyboardShortcut(",", modifiers: .command)
-            Button("アプリを終了") {
-                NSApplication.shared.terminate(nil)
-            }
-            .keyboardShortcut("q", modifiers: .command)
+            Button("更新を確認", action: updateManager.checkForUpdates)
+            SettingsLink { Text("設定") }
+                .keyboardShortcut(",", modifiers: .command)
+            Button("アプリを終了") { NSApplication.shared.terminate(nil) }
+                .keyboardShortcut("q", modifiers: .command)
         } label: {
             Text(calculator.title)
         }
