@@ -19,7 +19,11 @@ struct SettingsView: View {
                     if case .Custom(let format) = settings.renderStyle {
                         Text("カスタム").tag(RenderStyle.Custom(format: format))
                     } else {
-                        Text("カスタム").tag(RenderStyle.Custom(format: "{next.label}: {next.leftTime}"))
+                        Text("カスタム").tag(
+                            RenderStyle.Custom(
+                                format: "{next.label}: {next.leftTime}"
+                            )
+                        )
                     }
 
                 }
@@ -33,13 +37,12 @@ struct SettingsView: View {
                                 settings.renderStyle = .Custom(format: newValue)
                             }
                         )
+                    ).help(
+                        "以下の文字列が置き換えられます:\n{next.label} -> 次の予定の名前\n{next.leftTime} -> 次の予定までの残り時間"
                     )
                 default: EmptyView()
                 }
                 TextField("予定がないときの文字", text: $settings.fallbackText)
-                    .help(
-                        "下記のように置き換えられます:\n{next.label} -> 次の予定の名前\n{next.leftTime} -> 次の予定までの残り時間"
-                    )
                 LaunchAtLogin.Toggle("ログイン時に起動")
             }
             .formStyle(.grouped)
