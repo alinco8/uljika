@@ -30,7 +30,7 @@ class TimeCalculator {
 
     init(settings: AppSettings) {
         self.settings = settings
-        
+
         let date = Date()
         let components = Self.calendar.dateComponents(
             [.hour, .minute, .second],
@@ -92,13 +92,22 @@ class TimeCalculator {
             let leftSecs = nextSecs - nowSecs
             let leftMinutes = leftSecs / 60
             let leftSeconds = leftSecs % 60
+            let leftTime =
+                "\(String(format: "%02d", leftMinutes)):\(String(format: "%02d", leftSeconds))"
+
             let newTitle =
                 switch settings.renderStyle {
-                case .Normal:
-                    "\(label)まで\(String(format: "%02d", leftMinutes)):\(String(format: "%02d", leftSeconds))"
-                case .Compact:
-                    "\(String(format: "%02d", leftMinutes)):\(String(format: "%02d", leftSeconds))"
+                case .Normal: "\(label)まで\(leftTime)"
+                case .Compact: leftTime
+                case .Custom(let format):
+                    format
+                        .replacingOccurrences(of: "{next.label}", with: label)
+                        .replacingOccurrences(
+                            of: "{next.leftTime}",
+                            with: leftTime
+                        )
                 }
+
             if newTitle != title {
                 title = newTitle
             }
@@ -119,10 +128,10 @@ struct UljikaApp: App {
     @State private var calculator: TimeCalculator
     @State private var updateManager: UpdateManager
     @State private var settings: AppSettings
-    
+
     init() {
         let settings = AppSettings()
-        
+
         self.settings = settings
         self.calculator = TimeCalculator(settings: settings)
         self.updateManager = UpdateManager()

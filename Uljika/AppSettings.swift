@@ -1,10 +1,41 @@
 import SwiftUI
 
-enum RenderStyle: String, Identifiable, CaseIterable {
-    case Normal = "ノーマル"
-    case Compact = "コンパクト"
+enum RenderStyle: Identifiable, Hashable {
+    case Normal
+    case Compact
+    case Custom(format: String)
 
-    var id: String { self.rawValue }
+    var id: String {
+        switch self {
+        case .Normal:
+            "ノーマル"
+        case .Compact:
+            "コンパクト"
+        case .Custom(_):
+            "カスタム"
+        }
+    }
+    
+    func toString() -> String {
+        switch self {
+        case .Normal: "normal"
+        case .Compact: "compact"
+        case .Custom(format: let format): "custom;\(format)"
+        }
+    }
+    
+    static func fromString(string: String) -> Self? {
+        return switch string {
+        case "normal": .Normal
+        case "compact": .Compact
+        default:
+            if string.starts(with: "custom:") {
+                Self.Custom(format: String(string[string.startIndex...string.index(string.startIndex, offsetBy: 8)]))
+            } else {
+                nil
+            }
+        }
+    }
 }
 
 @Observable
@@ -19,7 +50,7 @@ class AppSettings {
     }
     var renderStyle: RenderStyle {
         didSet {
-            UserDefaults.standard.set(renderStyle, forKey: "renderStyle")
+            UserDefaults.standard.set(renderStyle.toString(), forKey: "renderStyle")
         }
     }
 
@@ -29,11 +60,9 @@ class AppSettings {
         self.fallbackText =
             UserDefaults.standard.object(forKey: "fallbackText") as? String
             ?? "(:3_ヽ)_"
-        self.renderStyle =
-            RenderStyle(
-                rawValue: UserDefaults.standard.object(forKey: "renderStyle")
-                    as? String ?? ""
-            ) ?? RenderStyle.Normal
+        self.renderStyle = RenderStyle.fromString(
+            string: UserDefaults.standard.object(forKey: "renderStyle") as? String ?? ""
+        ) ?? RenderStyle.Normal
     }
 
     func reset() {
