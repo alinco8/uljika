@@ -60,7 +60,9 @@ jobs:
           sed -i '' "s/CURRENT_PROJECT_VERSION = .*/CURRENT_PROJECT_VERSION = $(($CURRENT_PROJECT_VERSION + 1))/" Config.xcconfig
       - name: Build
         run: |
-          xcodebuild -scheme Uljika -configuration Release -derivedDataPath build CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=YES CODE_SIGNING_ALLOWED=YES
+          xcodebuild -scheme Uljika -configuration Release -derivedDataPath build \
+            CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=YES CODE_SIGNING_ALLOWED=YES \
+            ONLY_ACTIVE_ARCH=NO
       - name: Package
         run: |
           ditto -c -k --keepParent build/Build/Products/Release/Uljika.app Uljika-${{ steps.calculate_version.outputs.version }}.zip
