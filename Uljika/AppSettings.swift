@@ -1,5 +1,6 @@
 import SwiftUI
 
+private let compactModePrefix = "compact;"
 enum RenderStyle: Identifiable, Hashable {
     case Normal
     case Compact
@@ -20,7 +21,7 @@ enum RenderStyle: Identifiable, Hashable {
         switch self {
         case .Normal: "normal"
         case .Compact: "compact"
-        case .Custom(format: let format): "custom;\(format)"
+        case .Custom(format: let format): "\(compactModePrefix)\(format)"
         }
     }
     
@@ -29,8 +30,8 @@ enum RenderStyle: Identifiable, Hashable {
         case "normal": .Normal
         case "compact": .Compact
         default:
-            if string.starts(with: "custom:") {
-                Self.Custom(format: String(string[string.startIndex...string.index(string.startIndex, offsetBy: 8)]))
+            if string.hasPrefix(compactModePrefix) {
+                Self.Custom(format: String(string.dropFirst(compactModePrefix.count)))
             } else {
                 nil
             }
@@ -63,6 +64,8 @@ class AppSettings {
         self.renderStyle = RenderStyle.fromString(
             string: UserDefaults.standard.object(forKey: "renderStyle") as? String ?? ""
         ) ?? RenderStyle.Normal
+        print(UserDefaults.standard.object(forKey: "renderStyle"))
+        print(self.renderStyle.id)
     }
 
     func reset() {
