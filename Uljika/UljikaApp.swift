@@ -1,8 +1,5 @@
-import Combine
-import SwiftData
 import SwiftUI
-
-
+import AppKit
 
 @main
 struct UljikaApp: App {
@@ -12,7 +9,6 @@ struct UljikaApp: App {
 
     init() {
         let settings = AppSettings()
-
         self.settings = settings
         self.calculator = TimeCalculator(settings: settings)
     }
@@ -30,7 +26,13 @@ struct UljikaApp: App {
             Button("アプリを終了") { NSApplication.shared.terminate(nil) }
                 .keyboardShortcut("q", modifiers: .command)
         } label: {
-            Text(calculator.title)
+            MenuBarTitleLabel(
+                title: calculator.title,
+                referenceTitle: MenuBarLayoutHelper.referenceTitle(
+                    for: settings.renderStyle,
+                    fallbackText: settings.fallbackText
+                )
+            )
         }
     }
 }
