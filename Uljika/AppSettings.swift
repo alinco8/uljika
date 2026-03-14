@@ -64,8 +64,6 @@ class AppSettings {
         self.renderStyle = RenderStyle.fromString(
             string: UserDefaults.standard.object(forKey: "renderStyle") as? String ?? ""
         ) ?? RenderStyle.Normal
-        print(UserDefaults.standard.object(forKey: "renderStyle"))
-        print(self.renderStyle.id)
     }
 
     func reset() {
