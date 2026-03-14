@@ -29,35 +29,35 @@ class TimeCalculator {
     var title = "??まで--:--"
 
     init(settings: AppSettings) {
-        self.settings = settings
+            self.settings = settings
 
-        let date = Date()
-        let components = Self.calendar.dateComponents(
-            [.hour, .minute, .second],
-            from: date
-        )
+            let date = Date()
+            let components = Self.calendar.dateComponents(
+                [.hour, .minute, .second],
+                from: date
+            )
 
-        refreshNextSchedule(
-            nowSecs: (components.hour ?? 0) * 3600 + (components.minute ?? 0)
-                * 60
-        )
-        do {
-            try updateRemainingTime()
-        } catch {
-            print("タイマー更新中にエラーが発生: \(error)")
-        }
-
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) {
-            [weak self] _ in
-            MainActor.assumeIsolated {
-                do {
-                    try self?.updateRemainingTime()
-                } catch {
-                    print("タイマー更新中にエラーが発生: \(error)")
+            refreshNextSchedule(
+                nowSecs: (components.hour ?? 0) * 3600 + (components.minute ?? 0)
+                    * 60
+            )
+            do {
+                try updateRemainingTime()
+            } catch {
+                print("タイマー更新中にエラーが発生: \(error)")
+            }
+            let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) {
+                [weak self] _ in
+                MainActor.assumeIsolated {
+                    do {
+                        try self?.updateRemainingTime()
+                    } catch {
+                        print("タイマー更新中にエラーが発生: \(error)")
+                    }
                 }
             }
+            RunLoop.main.add(timer, forMode: .common)
         }
-    }
 
     private func updateRemainingTime() throws {
         let now = Date()
