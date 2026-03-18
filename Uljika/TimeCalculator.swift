@@ -5,7 +5,7 @@ import SwiftUI
 @Observable
 class TimeCalculator {
     static let schedules: [(String, Int)] = [
-        ("朝礼", 9 * 3600 + 31 * 60),
+        ("朝礼", 9 * 3600 + 30 * 60),
         ("1限目", 9 * 3600 + 45 * 60),
         ("休憩1", 10 * 3600 + 35 * 60),
         ("2限目", 10 * 3600 + 45 * 60),
