@@ -1,8 +1,10 @@
 import Combine
+import Foundation
 import SwiftData
 import SwiftUI
+import ZIPFoundation
 
-
+private let poller = ExtensionPoller(interval: .seconds(60))
 
 @main
 struct UljikaApp: App {
@@ -15,6 +17,43 @@ struct UljikaApp: App {
 
         self.settings = settings
         self.calculator = TimeCalculator(settings: settings)
+
+        poller.onUpdate = { text in
+            Task {
+
+                let appSupport = FileManager.default.urls(
+                    for: .applicationSupportDirectory,
+                    in: .userDomainMask
+                ).first!
+                let dir = appSupport.appendingPathComponent(
+                    "\(Bundle.main.bundleIdentifier!)/N-Extension"
+                )
+
+                if FileManager.default.fileExists(atPath: dir.path) {
+                    try FileManager.default.removeItem(at: dir)
+                }
+                try FileManager.default.createDirectory(
+                    at: dir,
+                    withIntermediateDirectories: true
+                )
+
+                let (data, _) = try await URLSession.shared.data(
+                    from: URL(
+                        string:
+                            "https://alinco8.github.io/n-extension/N-Extension.zip"
+                    )!
+                )
+
+                let tmpZip = dir.appendingPathComponent("tmp.zip")
+                try data.write(to: tmpZip)
+                try FileManager.default.unzipItem(at: tmpZip, to: dir)
+                try FileManager.default.removeItem(at: tmpZip)
+                
+                let defaults = UserDefaults(suiteName: "dev.alinco8.uljika")!
+                defaults.set(poller.latestVersion, forKey: "latestVersion")
+            }
+        }
+        poller.start()
     }
 
     var body: some Scene {

@@ -7,12 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4150FB902F8F33EC0069BF2A /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 4150FB8F2F8F33EC0069BF2A /* ZIPFoundation */; };
 		41638B102F5B289F006DD892 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 41638B0F2F5B289F006DD892 /* Config.xcconfig */; };
 		419ACD442F5B1A0200A76905 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 419ACD432F5B1A0200A76905 /* Sparkle */; };
 		419ACD492F5B1B8200A76905 /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 419ACD482F5B1B8200A76905 /* LaunchAtLogin */; };
+		41B788162F8F7F180074BB5C /* UljikaHelper in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4137097B2F8F7736005BD84C /* UljikaHelper */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		413709792F8F7736005BD84C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		41B788152F8F7F0A0074BB5C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				41B788162F8F7F180074BB5C /* UljikaHelper in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		4137097B2F8F7736005BD84C /* UljikaHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UljikaHelper; sourceTree = BUILT_PRODUCTS_DIR; };
 		41638B0F2F5B289F006DD892 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		418CC4FB2F59DBC300D90E80 /* Uljika.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Uljika.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -28,6 +53,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		4137097C2F8F7736005BD84C /* UljikaHelper */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = UljikaHelper;
+			sourceTree = "<group>";
+		};
 		418CC4D32F592C4A00D90E80 /* Uljika */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -39,12 +69,20 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		413709782F8F7736005BD84C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		418CC4CE2F592C4A00D90E80 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				419ACD492F5B1B8200A76905 /* LaunchAtLogin in Frameworks */,
 				419ACD442F5B1A0200A76905 /* Sparkle in Frameworks */,
+				4150FB902F8F33EC0069BF2A /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,12 +95,36 @@
 				41638B0F2F5B289F006DD892 /* Config.xcconfig */,
 				418CC4D32F592C4A00D90E80 /* Uljika */,
 				418CC4FB2F59DBC300D90E80 /* Uljika.app */,
+				4137097B2F8F7736005BD84C /* UljikaHelper */,
+				4137097C2F8F7736005BD84C /* UljikaHelper */,
 			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4137097A2F8F7736005BD84C /* UljikaHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 413709812F8F7736005BD84C /* Build configuration list for PBXNativeTarget "UljikaHelper" */;
+			buildPhases = (
+				413709772F8F7736005BD84C /* Sources */,
+				413709782F8F7736005BD84C /* Frameworks */,
+				413709792F8F7736005BD84C /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				4137097C2F8F7736005BD84C /* UljikaHelper */,
+			);
+			name = UljikaHelper;
+			packageProductDependencies = (
+			);
+			productName = UljikaHelper;
+			productReference = 4137097B2F8F7736005BD84C /* UljikaHelper */;
+			productType = "com.apple.product-type.tool";
+		};
 		418CC4D02F592C4A00D90E80 /* Uljika */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 418CC4DE2F592C4C00D90E80 /* Build configuration list for PBXNativeTarget "Uljika" */;
@@ -70,6 +132,7 @@
 				418CC4CD2F592C4A00D90E80 /* Sources */,
 				418CC4CE2F592C4A00D90E80 /* Frameworks */,
 				418CC4CF2F592C4A00D90E80 /* Resources */,
+				41B788152F8F7F0A0074BB5C /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -82,6 +145,7 @@
 			packageProductDependencies = (
 				419ACD432F5B1A0200A76905 /* Sparkle */,
 				419ACD482F5B1B8200A76905 /* LaunchAtLogin */,
+				4150FB8F2F8F33EC0069BF2A /* ZIPFoundation */,
 			);
 			productName = Uljika;
 			productReference = 418CC4FB2F59DBC300D90E80 /* Uljika.app */;
@@ -97,6 +161,9 @@
 				LastSwiftUpdateCheck = 2610;
 				LastUpgradeCheck = 2610;
 				TargetAttributes = {
+					4137097A2F8F7736005BD84C = {
+						CreatedOnToolsVersion = 26.1.1;
+					};
 					418CC4D02F592C4A00D90E80 = {
 						CreatedOnToolsVersion = 26.1.1;
 					};
@@ -114,6 +181,7 @@
 			packageReferences = (
 				419ACD422F5B1A0200A76905 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				419ACD472F5B1B8200A76905 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */,
+				4150FB8E2F8F33EC0069BF2A /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 418CC4C82F592C4A00D90E80;
@@ -121,6 +189,7 @@
 			projectRoot = "";
 			targets = (
 				418CC4D02F592C4A00D90E80 /* Uljika */,
+				4137097A2F8F7736005BD84C /* UljikaHelper */,
 			);
 		};
 /* End PBXProject section */
@@ -137,6 +206,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		413709772F8F7736005BD84C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		418CC4CD2F592C4A00D90E80 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -147,6 +223,36 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		4137097F2F8F7736005BD84C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CLL4J839WP;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		413709802F8F7736005BD84C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CLL4J839WP;
+				ENABLE_HARDENED_RUNTIME = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		418CC4DC2F592C4C00D90E80 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 41638B0F2F5B289F006DD892 /* Config.xcconfig */;
@@ -342,6 +448,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		413709812F8F7736005BD84C /* Build configuration list for PBXNativeTarget "UljikaHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4137097F2F8F7736005BD84C /* Debug */,
+				413709802F8F7736005BD84C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		418CC4CC2F592C4A00D90E80 /* Build configuration list for PBXProject "Uljika" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -363,6 +478,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4150FB8E2F8F33EC0069BF2A /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.20;
+			};
+		};
 		419ACD422F5B1A0200A76905 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sparkle-project/Sparkle";
@@ -382,6 +505,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4150FB8F2F8F33EC0069BF2A /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4150FB8E2F8F33EC0069BF2A /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
+		};
 		419ACD432F5B1A0200A76905 /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 419ACD422F5B1A0200A76905 /* XCRemoteSwiftPackageReference "Sparkle" */;
