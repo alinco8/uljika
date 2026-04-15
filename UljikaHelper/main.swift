@@ -27,17 +27,17 @@ func sendMessage(_ dict: [String: Any]) {
 while true {
     guard let msg = readMessage() else { break }
 
-    let action = msg["action"] as? String
+    let action = msg["type"] as? String
     switch action {
     case "ping":
-        sendMessage(["status": "ok"])
+        sendMessage(["type": "pong"])
 
-    case "latest_version":
+    case "retrieve_latest_version":
         let defaults = UserDefaults(suiteName: "dev.alinco8.uljika")
         let latestVersion = defaults?.string(forKey: "latestVersion")
         
         sendMessage([
-            "status": "ok",
+            "type": "latest_version",
             "payload": [
                 "latest_version": latestVersion
             ]
@@ -45,7 +45,7 @@ while true {
 
     default:
         sendMessage([
-            "status": "error",
+            "type": "error",
             "message": "unknown action: \(action ?? "<nil>")",
         ])
     }
